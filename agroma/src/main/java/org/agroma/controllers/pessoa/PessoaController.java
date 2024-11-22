@@ -19,7 +19,7 @@ public class PessoaController {
     @Autowired
     private PessoaService pessoaService;
 
-    @GetMapping("/findone/{id}")
+    @GetMapping("/findById/{id}")
     public ResponseEntity<PessoaResponse> findById(@PathVariable("id") Long idPessoa) throws UserPrincipalNotFoundException {
         return ResponseEntity.ok(
                 PessoaMapper.toResponse(pessoaService.findPessoaById(idPessoa))
@@ -27,15 +27,15 @@ public class PessoaController {
     }
 
     @GetMapping("/findall")
-    public ResponseEntity<List<PessoaResponse>> findAllPessoa(){
+    public ResponseEntity<List<PessoaResponse>> findAll(){
         return ResponseEntity.ok(
                 pessoaService.findAllPessoa().stream().map(PessoaMapper::toResponse)
                         .collect(Collectors.toList())
         );
     }
 
-    @PostMapping("create")
-    public ResponseEntity<PessoaResponse> saveNewPessoa(@RequestBody PessoaRequest pessoaRequest){
+    @PostMapping("/save")
+    public ResponseEntity<PessoaResponse> save(@RequestBody PessoaRequest pessoaRequest){
         return ResponseEntity.ok(
                 PessoaMapper.toResponse(
                         pessoaService.createPessoa(
@@ -45,8 +45,8 @@ public class PessoaController {
         );
     }
 
-    @PutMapping("atualizar")
-    public ResponseEntity<HttpStatus> saveNewPessoa(@RequestBody PessoaRequestExisting pessoaRequest){
+    @PutMapping("/update")
+    public ResponseEntity<HttpStatus> update(@RequestBody PessoaRequestExisting pessoaRequest){
         pessoaService.atualizarPessoa(
                 PessoaMapper.toEntityFromRequestExisting(pessoaRequest));
 

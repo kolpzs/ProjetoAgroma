@@ -17,19 +17,19 @@ import java.util.function.Function;
 
 @Service
 public class JwtUtils {
-    public String generateToken(UsuarioEntity userDetails) {
+    public String generateToken(UsuarioEntity usuarioEntity) {
 
         //AQUI VOCÊ PODE COLOCAR O QUE MAIS VAI COMPOR O PAYLOAD DO TOKEN
         Map<String, Object> extraClaims = new HashMap<>();
-        extraClaims.put("username", userDetails.getUsername());
-        extraClaims.put("id", userDetails.getId().toString());
-        extraClaims.put("role", userDetails.getRole());
+        extraClaims.put("username", usuarioEntity.getUsername());
+        extraClaims.put("id", usuarioEntity.getId().toString());
+        extraClaims.put("role", usuarioEntity.getRole());
         extraClaims.put("outracoisa", "teste");
 
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
-                .setSubject(userDetails.getUsername())
+                .setSubject(usuarioEntity.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(new Date().getTime() + 3600000))
                 .signWith(getSigningKey(), JWTKeys.ALGORITMO_ASSINATURA)
