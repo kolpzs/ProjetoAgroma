@@ -21,45 +21,32 @@ public class PessoaController {
 
     @GetMapping("/findById/{id}")
     public ResponseEntity<PessoaResponse> findById(@PathVariable("id") Long idPessoa) throws UserPrincipalNotFoundException {
-        return ResponseEntity.ok(
-                PessoaMapper.toResponse(pessoaService.findPessoaById(idPessoa))
-        );
+        return ResponseEntity.ok(PessoaMapper.toResponse(pessoaService.findPessoaById(idPessoa)));
     }
 
     @GetMapping("/findall")
-    public ResponseEntity<List<PessoaResponse>> findAll(){
-        return ResponseEntity.ok(
-                pessoaService.findAllPessoa().stream().map(PessoaMapper::toResponse)
-                        .collect(Collectors.toList())
-        );
+    public ResponseEntity<List<PessoaResponse>> findAll() {
+        return ResponseEntity.ok(pessoaService.findAllPessoa().stream().map(PessoaMapper::toResponse).collect(Collectors.toList()));
     }
 
     @PostMapping("/save")
-    public ResponseEntity<PessoaResponse> save(@RequestBody PessoaRequest pessoaRequest){
-        return ResponseEntity.ok(
-                PessoaMapper.toResponse(
-                        pessoaService.createPessoa(
-                                PessoaMapper.toEntityFromRequest(pessoaRequest)
-                        )
-                )
-        );
+    public ResponseEntity<PessoaResponse> save(@RequestBody PessoaRequest pessoaRequest) {
+        return ResponseEntity.ok(PessoaMapper.toResponse(pessoaService.createPessoa(PessoaMapper.toEntityFromRequest(pessoaRequest))));
     }
 
     @PutMapping("/update")
-    public ResponseEntity<HttpStatus> update(@RequestBody PessoaRequestExisting pessoaRequest){
-        pessoaService.atualizarPessoa(
-                PessoaMapper.toEntityFromRequestExisting(pessoaRequest));
-
+    public ResponseEntity<HttpStatus> update(@RequestBody PessoaRequestExisting pessoaRequest) {
+        pessoaService.atualizarPessoa(PessoaMapper.toEntityFromRequestExisting(pessoaRequest));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PreAuthorize("hasRole('admin')")
     @DeleteMapping("delete/{idUser}")
-    public ResponseEntity<HttpStatus> deletePessoa(@PathVariable (name = "idUser") Long id){
-        try{
+    public ResponseEntity<HttpStatus> deletePessoa(@PathVariable(name = "idUser") Long id) {
+        try {
             pessoaService.deletePessoa(id);
             return ResponseEntity.status(HttpStatus.ACCEPTED).build();
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
