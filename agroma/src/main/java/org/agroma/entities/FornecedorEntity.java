@@ -5,6 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
+import java.util.List;
 
 @Setter
 @Getter
@@ -22,14 +26,31 @@ public class FornecedorEntity {
     private String nome_social;
 
     @Column(nullable = false)
-    private String descricao;
-
-    @Column(nullable = false)
+    @Pattern(regexp = "\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2}")
+    // 00.000.000/0000-00
     private String cnpj;
 
     @Column(nullable = false)
-    private String telefone;
+    @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")
+    // email@email.com
+    private String email;
 
     @Column(nullable = false)
-    private String email;
+    @Pattern(regexp = "\\(\\d{2}\\)\\d{4,5}-\\d{4}")
+    // (45)99999-9399
+    private String telefone;
+
+    @OneToMany(mappedBy = "fornecedor")
+    @JsonIgnoreProperties({"produtos", "fornecedores", "enderecos", "funcionarios", "adms", "guias_entradas", "guias_saidas", "clientes"})
+    private List<EnderecoEntity> enderecos;
+
+    @ManyToMany(mappedBy = "fornecedores")
+    @JsonIgnoreProperties({"produtos", "fornecedores", "enderecos", "funcionarios", "adms", "guias_entradas", "guias_saidas", "clientes"})
+    private List<ProdutoEntity> produtos;
+
+    @OneToMany(mappedBy = "fornecedor")
+    @JsonIgnoreProperties({"produtos", "fornecedores", "enderecos", "funcionarios", "adms", "guias_entradas", "guias_saidas", "clientes"})
+    private List<GuiaEntradaEntity> guias_entradas;
+
 }
+

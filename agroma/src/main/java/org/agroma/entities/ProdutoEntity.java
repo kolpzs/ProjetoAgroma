@@ -17,6 +17,7 @@ import java.util.List;
 @Table
 @Entity(name = "produtos")
 public class ProdutoEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -34,6 +35,10 @@ public class ProdutoEntity {
     @Column(nullable = false)
     private String modelo;
 
+    @Min(0)
+    @Column(nullable = false)
+    private Long cod_barras;
+
     @ManyToMany
     @JoinTable(
             name = "produto_fornecedor",
@@ -42,4 +47,12 @@ public class ProdutoEntity {
     )
     @JsonIgnoreProperties({"produtos", "fornecedores", "enderecos", "funcionarios", "adms", "guias_entradas", "guias_saidas", "clientes"})
     private List<FornecedorEntity> fornecedores;
+
+    @OneToMany(mappedBy = "produto")
+    @JsonIgnoreProperties({"produtos", "fornecedores", "enderecos", "funcionarios", "adms", "guias_entradas", "guias_saidas", "clientes"})
+    private List<GuiaEntradaEntity> guias_entradas;
+
+    @OneToMany(mappedBy = "produto")
+    @JsonIgnoreProperties({"produtos", "fornecedores", "enderecos", "funcionarios", "adms", "guias_entradas", "guias_saidas", "clientes"})
+    private List<GuiaSaidaEntity> guias_saidas;
 }

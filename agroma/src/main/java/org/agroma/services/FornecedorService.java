@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class FornecedorService {
@@ -13,8 +14,8 @@ public class FornecedorService {
     @Autowired
     private FornecedorRepository fornecedorRepository;
 
-    public FornecedorEntity save(FornecedorEntity fornecedor) {
-        return fornecedorRepository.save(fornecedor);
+    public FornecedorEntity save(FornecedorEntity fornecedorEntity) {
+        return fornecedorRepository.save(fornecedorEntity);
     }
 
     public FornecedorEntity findById(Long id) {
@@ -25,20 +26,28 @@ public class FornecedorService {
         return fornecedorRepository.findAll();
     }
 
-    public void delete(FornecedorEntity fornecedor) {
-        fornecedorRepository.delete(fornecedor);
-    }
-
-    public FornecedorEntity update(FornecedorEntity fornecedor) {
-        if (fornecedorRepository.existsById(fornecedor.getId())) {
-            FornecedorEntity fornecedorEntity = fornecedorRepository.findById(fornecedor.getId()).orElseThrow();
-            fornecedorEntity.setNome_social(fornecedor.getNome_social());
-            fornecedorEntity.setDescricao(fornecedor.getDescricao());
-            fornecedorEntity.setCnpj(fornecedor.getCnpj());
-            fornecedorEntity.setTelefone(fornecedor.getTelefone());
-            fornecedorEntity.setEmail(fornecedor.getEmail());
-            return fornecedorRepository.save(fornecedorEntity);
+    public FornecedorEntity update(FornecedorEntity fornecedorEntity) {
+        FornecedorEntity base = findById(fornecedorEntity.getId());
+        if (Objects.equals(fornecedorEntity.getId(), base.getId())) {
+            if (fornecedorEntity.getNome_social() != null) {
+                base.setNome_social(fornecedorEntity.getNome_social());
+            }
+            if (fornecedorEntity.getCnpj() != null) {
+                base.setCnpj(fornecedorEntity.getCnpj());
+            }
+            if (fornecedorEntity.getEmail() != null) {
+                base.setEmail(fornecedorEntity.getEmail());
+            }
+            if (fornecedorEntity.getTelefone() != null) {
+                base.setTelefone(fornecedorEntity.getTelefone());
+            }
+            return save(base);
         }
         return null;
+    }
+
+    public String delete(Long id) {
+        fornecedorRepository.delete(findById(id));
+        return "Fornecedor removido com sucesso!";
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ClienteService {
@@ -13,8 +14,8 @@ public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    public ClienteEntity save(ClienteEntity cliente) {
-        return clienteRepository.save(cliente);
+    public ClienteEntity save(ClienteEntity clienteEntity) {
+        return clienteRepository.save(clienteEntity);
     }
 
     public ClienteEntity findById(Long id) {
@@ -25,18 +26,29 @@ public class ClienteService {
         return clienteRepository.findAll();
     }
 
-    public void delete(Long id) {
-        clienteRepository.deleteById(id);
-    }
-
-    public ClienteEntity update(ClienteEntity cliente) {
-        if (clienteRepository.existsById(cliente.getId())) {
-            ClienteEntity clienteEntity = clienteRepository.findById(cliente.getId()).orElseThrow();
-            clienteEntity.setNome(cliente.getNome());
-            clienteEntity.setEmail(cliente.getEmail());
-            clienteEntity.setTelefone(cliente.getTelefone());
-            return clienteRepository.save(clienteEntity);
+    public ClienteEntity update(ClienteEntity clienteEntity) {
+        ClienteEntity base = findById(clienteEntity.getId());
+        if (Objects.equals(clienteEntity.getId(), base.getId())) {
+            if (clienteEntity.getNome() != null) {
+                base.setNome(clienteEntity.getNome());
+            }
+            if (clienteEntity.getCpf() != null) {
+                base.setCpf(clienteEntity.getCpf());
+            }
+            if (clienteEntity.getEmail() != null) {
+                base.setEmail(clienteEntity.getEmail());
+            }
+            if (clienteEntity.getTelefone() != null) {
+                base.setTelefone(clienteEntity.getTelefone());
+            }
+            return save(base);
         }
         return null;
     }
+
+    public String delete(Long id) {
+        clienteRepository.delete(findById(id));
+        return "Cliente removido com sucesso!";
+    }
 }
+
