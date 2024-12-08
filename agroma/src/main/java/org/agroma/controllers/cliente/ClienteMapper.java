@@ -8,8 +8,10 @@ public class ClienteMapper {
         return new ClienteResponse(
                 clienteEntity.getId(),
                 clienteEntity.getNome(),
+                clienteEntity.getCpf(),
                 clienteEntity.getEmail(),
-                clienteEntity.getTelefone()
+                clienteEntity.getTelefone(),
+                clienteEntity.getGuias_saidas()
         );
     }
 
@@ -17,8 +19,10 @@ public class ClienteMapper {
         return new ClienteEntity(
                 null,
                 clienteRequest.nome(),
+                clienteRequest.cpf(),
                 clienteRequest.email(),
-                clienteRequest.telefone()
+                clienteRequest.telefone(),
+                clienteRequest.guias_saidas()
         );
     }
 
@@ -26,8 +30,10 @@ public class ClienteMapper {
         return new ClienteEntity(
                 clienteRequestExisting.id(),
                 clienteRequestExisting.nome(),
+                clienteRequestExisting.cpf(),
                 clienteRequestExisting.email(),
-                clienteRequestExisting.telefone()
+                clienteRequestExisting.telefone(),
+                clienteRequestExisting.guias_saidas()
         );
     }
 }

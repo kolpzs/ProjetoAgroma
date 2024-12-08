@@ -35,10 +35,6 @@ public class ProdutoEntity {
     @Column(nullable = false)
     private String modelo;
 
-    @Min(0)
-    @Column(nullable = false)
-    private Long cod_barras;
-
     @ManyToMany
     @JoinTable(
             name = "produto_fornecedor",

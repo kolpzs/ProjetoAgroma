@@ -21,7 +21,9 @@ public class ProdutoMapper {
                 produtoRequest.nome(),
                 produtoRequest.marca(),
                 produtoRequest.modelo(),
-                produtoRequest.fornecedores()
+                produtoRequest.fornecedores(),
+                produtoRequest.guias_entradas(),
+                produtoRequest.guias_saidas()
         );
     }
 
@@ -32,7 +34,9 @@ public class ProdutoMapper {
                 produtoRequestExisting.nome(),
                 produtoRequestExisting.marca(),
                 produtoRequestExisting.modelo(),
-                produtoRequestExisting.fornecedores()
+                produtoRequestExisting.fornecedores(),
+                produtoRequestExisting.guias_entradas(),
+                produtoRequestExisting.guias_saidas()
         );
     }
 }

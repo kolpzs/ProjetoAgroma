@@ -40,10 +40,6 @@ public class FornecedorEntity {
     // (45)99999-9399
     private String telefone;
 
-    @OneToMany(mappedBy = "fornecedor")
-    @JsonIgnoreProperties({"produtos", "fornecedores", "enderecos", "funcionarios", "adms", "guias_entradas", "guias_saidas", "clientes"})
-    private List<EnderecoEntity> enderecos;
-
     @ManyToMany(mappedBy = "fornecedores")
     @JsonIgnoreProperties({"produtos", "fornecedores", "enderecos", "funcionarios", "adms", "guias_entradas", "guias_saidas", "clientes"})
     private List<ProdutoEntity> produtos;

@@ -2,8 +2,8 @@ package org.agroma.services;
 
 import org.agroma.entities.FornecedorEntity;
 import org.agroma.entities.ProdutoEntity;
+import org.agroma.repositories.FornecedorRepository;
 import org.agroma.repositories.ProdutoRepository;
-import com.projetointegrador.repositories.FornecedorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,11 +20,7 @@ public class ProdutoService {
     @Autowired
     private FornecedorRepository fornecedorRepository;
 
-    public ProdutoEntity save(ProdutoEntity produto, Long id) {
-        FornecedorEntity fornecedor = fornecedorRepository.findById(id).orElseThrow();
-        List<FornecedorEntity> fornecedores = new ArrayList<>();
-        fornecedores.add(fornecedor);
-        produto.setFornecedores(fornecedores);
+    public ProdutoEntity save(ProdutoEntity produto) {
         return produtoRepository.save(produto);
     }
 
@@ -64,8 +60,7 @@ public class ProdutoService {
             if (produtoEntity.getModelo() != null) {
                 base.setModelo(produtoEntity.getModelo());
             }
-            List<FornecedorEntity> fornecedores = produtoEntity.getFornecedores();
-            return save(base, fornecedores.get(0).getId());
+            return produtoRepository.save(base);
         }
         return null;
     }
