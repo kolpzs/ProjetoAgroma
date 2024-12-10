@@ -9,6 +9,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UsuarioService {
 
@@ -26,8 +28,8 @@ public class UsuarioService {
 
     public String logar(LoginRequest login) {
         System.out.println(login.toString());
-        var data = usuarioRepository.findByUsername(login.nome()).orElseThrow();
-        System.out.println(data.getUsername());
+        Optional<UsuarioEntity> data = usuarioRepository.findByUsername(login.nome());
+        System.out.println(data.get().getUsuario());
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         login.nome(),

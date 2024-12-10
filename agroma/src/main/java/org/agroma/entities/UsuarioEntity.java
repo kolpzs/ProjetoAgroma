@@ -18,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "usuarios_seq")
+@Table(name = "usuarios")
 public class UsuarioEntity implements UserDetails {
 
     @Id
