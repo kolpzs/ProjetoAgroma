@@ -17,25 +17,27 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table()
-@Entity(name = "usuarios")
+@Entity
+@Table(name = "usuarios_seq")
 public class UsuarioEntity implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private String username;
-    @Column
+    @Column(nullable = false)
+    private String usuario;
+
+    @Column(nullable = false)
     private String password;
-    @Column
-    private String role;
+
+    @Column(nullable = false)
+    private String isAdmin;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(this.role));
+        authorities.add(new SimpleGrantedAuthority(this.isAdmin));
         return authorities;
     }
 
@@ -46,7 +48,7 @@ public class UsuarioEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return usuario;
     }
 
     @Override
@@ -68,5 +70,4 @@ public class UsuarioEntity implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
 }

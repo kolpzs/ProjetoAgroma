@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.*;
 public class LoginController {
 
     @Autowired
-    private UsuarioService pessoaService;
+    private UsuarioService usuarioService;
 
     @PostMapping("login")
     public ResponseEntity<String> logar(@RequestBody LoginRequest login) {
         try {
-            return ResponseEntity.ok(pessoaService.logar(login));
+            return ResponseEntity.ok(usuarioService.logar(login));
         } catch (AuthenticationException ex) {
             System.out.println(ex.getMessage());
             return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
@@ -30,7 +30,7 @@ public class LoginController {
 
     @PostMapping("/newUser/save")
     public ResponseEntity<HttpStatus> saveNewUser(@RequestParam String usuario, @RequestParam String password, @RequestParam Boolean isAdmin) {
-        pessoaService.saveNewUser(usuario, password, isAdmin);
+        usuarioService.saveNewUser(usuario, password, isAdmin);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }
