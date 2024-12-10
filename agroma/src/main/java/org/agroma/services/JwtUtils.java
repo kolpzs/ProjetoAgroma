@@ -19,12 +19,11 @@ import java.util.function.Function;
 public class JwtUtils {
     public String generateToken(UsuarioEntity usuarioEntity) {
 
-        //AQUI VOCÊ PODE COLOCAR O QUE MAIS VAI COMPOR O PAYLOAD DO TOKEN
+        // Adicionando informações ao payload do token
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("username", usuarioEntity.getUsername());
         extraClaims.put("id", usuarioEntity.getId().toString());
-        extraClaims.put("role", usuarioEntity.getRole());
-        extraClaims.put("outracoisa", "teste");
+        extraClaims.put("idadmin", usuarioEntity.getIsAdmin());
 
         return Jwts
                 .builder()
@@ -62,7 +61,6 @@ public class JwtUtils {
         byte[] keyBytes = Decoders.BASE64.decode(JWTKeys.SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
     }
-
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);

@@ -24,7 +24,6 @@ public class UsuarioService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-
     public String logar(LoginRequest login) {
         System.out.println(login.toString());
         var data = usuarioRepository.findByUsername(login.nome()).orElseThrow();
@@ -46,7 +45,7 @@ public class UsuarioService {
                         null,
                         usuario,
                         passwordEncoder.encode(password),
-                        (isAdmin?"admin":"user")
+                        (isAdmin ? "admin" : "user")
                 )
         );
     }

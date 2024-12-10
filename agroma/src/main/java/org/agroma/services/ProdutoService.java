@@ -1,6 +1,5 @@
 package org.agroma.services;
 
-import org.agroma.entities.FornecedorEntity;
 import org.agroma.entities.ProdutoEntity;
 import org.agroma.repositories.FornecedorRepository;
 import org.agroma.repositories.ProdutoRepository;
