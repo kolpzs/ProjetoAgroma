@@ -26,15 +26,16 @@ public class UsuarioService {
 
 
     public String logar(LoginRequest login) {
-        var data = usuarioRepository.findByUsername(login.login()).orElseThrow();
+        System.out.println(login.toString());
+        var data = usuarioRepository.findByUsername(login.nome()).orElseThrow();
         System.out.println(data.getUsername());
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        login.login(),
+                        login.nome(),
                         login.senha()
                 )
         );
-        UsuarioEntity user = usuarioRepository.findByUsername(login.login()).orElseThrow();
+        UsuarioEntity user = usuarioRepository.findByUsername(login.nome()).orElseThrow();
 
         return jwtService.generateToken(user);
     }

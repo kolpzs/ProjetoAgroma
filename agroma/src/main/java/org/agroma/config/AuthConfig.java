@@ -36,6 +36,7 @@ public class AuthConfig {
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/login").permitAll()
+                        .requestMatchers("/newUser/*").permitAll()
                         .requestMatchers("/h2-console").permitAll()
                         .anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider)
