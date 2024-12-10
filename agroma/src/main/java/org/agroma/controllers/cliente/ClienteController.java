@@ -1,6 +1,5 @@
 package org.agroma.controllers.cliente;
 
-import org.agroma.entities.ClienteEntity;
 import org.agroma.services.ClienteService;
 import org.agroma.services.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;

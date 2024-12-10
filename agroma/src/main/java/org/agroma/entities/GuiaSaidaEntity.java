@@ -7,8 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.agroma.entities.ClienteEntity;
-import org.agroma.entities.ProdutoEntity;
 
 import java.util.Date;
 
